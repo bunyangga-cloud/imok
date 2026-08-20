@@ -220,15 +220,29 @@ function closeModal() {
   if (modal) modal.classList.remove('active');
 }
 
-function openPrivacyModal() {
+function openPrivacyModal(e) {
+  if (e) {
+    if (e.preventDefault) e.preventDefault();
+    if (e.stopPropagation) e.stopPropagation();
+  }
   const modal = document.getElementById('privacy-modal');
-  if (modal) modal.classList.add('active');
+  if (modal) {
+    modal.classList.add('active');
+  }
 }
+window.openPrivacyModal = openPrivacyModal;
 
-function closePrivacyModal() {
+function closePrivacyModal(e) {
+  if (e) {
+    if (e.preventDefault) e.preventDefault();
+    if (e.stopPropagation) e.stopPropagation();
+  }
   const modal = document.getElementById('privacy-modal');
-  if (modal) modal.classList.remove('active');
+  if (modal) {
+    modal.classList.remove('active');
+  }
 }
+window.closePrivacyModal = closePrivacyModal;
 
 /* 4. 1:1 스마트 AI 챗봇 */
 function toggleChatbot() {

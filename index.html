@@ -298,11 +298,13 @@
               <select id="user-time" class="form-select" required>
                 <option value="10:00">10:00 (오전)</option>
                 <option value="11:00">11:00 (오전)</option>
+                <option value="12:00">12:00 (오후 12시)</option>
                 <option value="13:00">13:00 (오후 1시)</option>
                 <option value="14:00" selected>14:00 (오후 2시)</option>
                 <option value="15:00">15:00 (오후 3시)</option>
                 <option value="16:00">16:00 (오후 4시)</option>
                 <option value="17:00">17:00 (오후 5시)</option>
+                <option value="18:00">18:00 (오후 6시)</option>
               </select>
             </div>
           </div>
@@ -312,7 +314,7 @@
             <label for="user-agree" class="checkbox-label">
               [필수] 개인정보 수집 및 이용 동의
             </label>
-            <button type="button" class="btn-privacy-view" onclick="openPrivacyModal()">[보기]</button>
+            <span class="btn-privacy-view" onclick="openPrivacyModal(event)">[보기]</span>
           </div>
 
           <button type="submit" class="btn-submit-form">모델하우스 방문 예약 및 분양가 받기</button>

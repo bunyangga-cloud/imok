@@ -1402,19 +1402,27 @@ button {
 }
 
 .btn-privacy-view {
-  background: none;
-  border: none;
+  background: rgba(197, 168, 128, 0.15);
+  border: 1px solid rgba(197, 168, 128, 0.3);
   color: var(--color-accent-gold);
   font-weight: 800;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   cursor: pointer;
-  margin-left: 6px;
-  text-decoration: underline;
-  transition: opacity 0.2s ease;
+  margin-left: 8px;
+  padding: 2px 10px;
+  border-radius: 12px;
+  display: inline-block;
+  user-select: none;
+  transition: all 0.2s ease;
 }
 
 .btn-privacy-view:hover {
-  opacity: 0.8;
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+#privacy-modal {
+  z-index: 99999 !important;
 }
 
 .privacy-modal-box {
