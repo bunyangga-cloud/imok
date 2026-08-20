@@ -204,12 +204,12 @@ function triggerBotScenario(action) {
   let needForm = false;
 
   if (action === 'address') {
-    userText = '📍 모델하우스 위치 주소 받기';
-    botReply = '수원 이목지구 디에트르 II 모델하우스 정확한 네비게이션 주소와 무료 주차권을 문자로 보내드립니다. 고객님의 성함과 연락처를 입력해 주세요.';
+    userText = '📍 모델하우스 위치 주소 안내';
+    botReply = '수원 이목지구 디에트르 II 모델하우스 정확한 위치 안내 및 방문 예약을 도와드립니다. 고객님의 성함과 연락처를 입력해 주세요.';
     needForm = true;
   } else if (action === 'price') {
     userText = '💰 평형별 분양가 즉시 확인';
-    botReply = '분양가 상한제가 적용된 84㎡ / 116㎡ 타입별 최신 분양가표 및 한시적 옵션 무상 제공 내역서를 문자로 발송해 드립니다.';
+    botReply = '분양가 상한제가 적용된 84㎡ / 116㎡ 타입별 최신 분양가표 및 한시적 옵션 무상 제공 안내를 위해 성함과 연락처를 입력해 주세요.';
     needForm = true;
   } else if (action === 'call') {
     userText = '📞 전문 상담원 빠른 유선상담';
