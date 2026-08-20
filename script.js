@@ -130,17 +130,6 @@ function initTypeTabs() {
   });
 }
 
-function openImageModal() {
-  const typeImg = document.getElementById('type-img');
-  const typeTitle = document.getElementById('type-title');
-  const modal = document.getElementById('img-modal');
-  const modalSrc = document.getElementById('img-modal-src');
-  const modalTitle = document.getElementById('img-modal-title');
-
-  if (modal && modalSrc && typeImg) {
-    modalSrc.src = typeImg.src;
-    if (modalTitle && typeTitle) {
-      modalTitle.innerText = `${typeTitle.innerText} - 평면도 확대`;
     }
     modal.classList.add('active');
   }
@@ -151,7 +140,7 @@ function closeImageModal() {
   if (modal) modal.classList.remove('active');
 }
 
-/* 2. 관심고객 등록 폼 및 이메일(y3974@naver.com) 전송 연동 */
+/* 2. 모델하우스 방문예약 폼 및 이메일(y3974@naver.com) 전송 연동 */
 function initRegistrationForm() {
   const form = document.getElementById('vip-register-form');
   if (!form) return;
@@ -164,7 +153,8 @@ function initRegistrationForm() {
 
     const name = document.getElementById('user-name').value.trim();
     const phone = document.getElementById('user-phone').value.trim();
-    const area = document.getElementById('user-area').value;
+    const date = document.getElementById('user-date') ? document.getElementById('user-date').value : '';
+    const time = document.getElementById('user-time') ? document.getElementById('user-time').value : '';
     const agree = document.getElementById('user-agree').checked;
 
     if (!name) {
@@ -192,29 +182,22 @@ function initRegistrationForm() {
           'Accept': 'application/json'
         },
         body: JSON.stringify({
-          _subject: `[이목지구 디에트르 II] 관심고객 접수: ${name}님`,
+          _subject: `[이목지구 디에트르 II] 방문예약 접수: ${name}님`,
           고객명: name,
           연락처: phone,
-          희망평형: area,
+          방문희망일자: date,
+          방문희망시간: time,
           접수시간: new Date().toLocaleString('ko-KR')
         })
       });
 
-      const result = await response.json();
-      
-      // 저장 로컬 백업
-      const registrationData = { name, phone, area, date: new Date().toLocaleString() };
-      let saved = JSON.parse(localStorage.getItem('imok_leads') || '[]');
-      saved.push(registrationData);
-      localStorage.setItem('imok_leads', JSON.stringify(saved));
-
       // 성공 모달 노출
-      openModal('관심고객 접수 완료', `<strong>${name}</strong> 고객님의 관심고객 등록이 완료되었습니다.<br><br>작성하신 접수 내용이 <strong>${TARGET_EMAIL}</strong> 메일로 안전하게 전송되었으며, 입력하신 번호(<strong>${phone}</strong>)로 전담 안내원이 곧 연락드리겠습니다.`);
+      openModal('방문예약 접수 완료', `<strong>${name}</strong> 고객님의 방문예약이 등록되었습니다.<br><br>예약 일시: <strong>${date || '미지정'} ${time || ''}</strong><br>작성하신 접수 내용이 <strong>${TARGET_EMAIL}</strong> 메일로 전송되었으며, 입력하신 번호(<strong>${phone}</strong>)로 전담 안내원이 곧 연락드리겠습니다.`);
       
       form.reset();
     } catch (err) {
       console.error('메일 전송 오류:', err);
-      openModal('접수 완료', `${name} 고객님의 관심고객 등록이 접수되었습니다. (연락처: ${phone})`);
+      openModal('접수 완료', `${name} 고객님의 방문예약이 접수되었습니다. (연락처: ${phone})`);
     } finally {
       submitBtn.innerText = originalText;
       submitBtn.disabled = false;
@@ -222,7 +205,7 @@ function initRegistrationForm() {
   });
 }
 
-/* 3. 모달 제어 */
+/* 3. 모달 제어 및 약관 모달 */
 function openModal(title, desc) {
   const modal = document.getElementById('info-modal');
   if (!modal) return;
@@ -234,6 +217,16 @@ function openModal(title, desc) {
 
 function closeModal() {
   const modal = document.getElementById('info-modal');
+  if (modal) modal.classList.remove('active');
+}
+
+function openPrivacyModal() {
+  const modal = document.getElementById('privacy-modal');
+  if (modal) modal.classList.add('active');
+}
+
+function closePrivacyModal() {
+  const modal = document.getElementById('privacy-modal');
   if (modal) modal.classList.remove('active');
 }
 
