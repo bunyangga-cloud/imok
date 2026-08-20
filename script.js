@@ -13,11 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const TARGET_EMAIL = 'y3974@naver.com';
 
-/* 1. 평형 타입별 탭 제어 데이터 및 로직 */
+/* 1. 평형 타입별 탭 제어 데이터 및 이미지 매핑 */
 const typeData = {
   '84a': {
     title: '84㎡ A 타입 (전용 84.92㎡)',
     badgeText: '84A',
+    imageSrc: 'images/buksuwon_i_84A_평면도.jpg',
     subText: '수원 이목지구 대표 프리미엄 4Bay 판상형',
     desc: '채광과 통풍을 극대화한 4Bay 혁신 구조로 설계되었으며, 대방건설만의 광폭 와이드 거실 기술이 적용되어 탁 트인 개방감을 제공합니다.',
     supplyArea: '114.28㎡',
@@ -28,6 +29,7 @@ const typeData = {
   '84b': {
     title: '84㎡ B 타입 (전용 84.88㎡)',
     badgeText: '84B',
+    imageSrc: 'images/buksuwon_i_84B_평면도.jpg',
     subText: '트렌디한 하이엔드 조망형 타워형',
     desc: '독립적인 거실과 주방 배치를 통해 프라이버시를 극대화하였으며, 다각도 양면 조망으로 뛰어난 일조권을 확보한 하이엔드 타입입니다.',
     supplyArea: '114.15㎡',
@@ -38,6 +40,7 @@ const typeData = {
   '84c': {
     title: '84㎡ C 타입 (전용 84.95㎡)',
     badgeText: '84C',
+    imageSrc: 'images/buksuwon_i_84C_평면도.jpg',
     subText: '실사용 공간을 극대화한 실속 LDK 구조',
     desc: '거실과 식당, 주방이 일체화된 LDK 구조로 가족 중심의 생활 공간을 제안하며, 알찬 수납공간 구성으로 공간 효율성을 최고로 높였습니다.',
     supplyArea: '114.35㎡',
@@ -46,24 +49,48 @@ const typeData = {
     featurePills: ['개방감 넘치는 LDK 구조', '와이드 주방 아일랜드', '알파룸 멀티 공간 활용', '한시적 유상옵션 무상']
   },
   '116a': {
-    title: '116㎡ A 타입 (전용 116.42㎡)',
+    title: '115/116㎡ A 타입 (전용 115.42㎡)',
     badgeText: '116A',
+    imageSrc: 'images/buksuwon_i_115A_평면도.jpg',
     subText: '품격이 다른 대형 프리미엄 리더스 타입',
     desc: '2,512세대 대단지의 자부심을 담은 펜트하우스급 대형 평형으로, 6m 이상의 압도적 광폭 거실과 와이드 마스터룸 드레스룸을 갖추었습니다.',
     supplyArea: '152.18㎡',
-    privateArea: '116.42㎡',
+    privateArea: '115.42㎡',
     rooms: '침실 4개 + 대형 알파룸 + 욕실 2개',
     featurePills: ['6m+ 초광폭 와이드 거실', '대형 침실 4개 독립 구조', '럭셔리 파우더 & 드레스룸', '세대당 2.1대 주차 우대']
   },
   '116b': {
     title: '116㎡ B 타입 (전용 116.38㎡)',
     badgeText: '116B',
+    imageSrc: 'images/buksuwon_i_116B_평면도.jpg',
     subText: '파노라마 조망과 파인 리빙 특화 스위트',
     desc: '탁 트인 파노라마 뷰와 시원한 개방감을 선사하는 최고급 아파트 디자인으로, 고급스러운 인테리어 소재와 와이드 다이닝 공간을 제공합니다.',
     supplyArea: '152.05㎡',
     privateArea: '116.38㎡',
     rooms: '침실 4개 + 욕실 2개 + 대형 펜트리',
     featurePills: ['파노라마 가든 뷰 확보', '최고급 호텔식 욕실 특화', '와이드 다이닝 스페이스', '단지 내 수영장/스파 인접']
+  },
+  '139a': {
+    title: '139㎡ A 타입 (대형 특화)',
+    badgeText: '139A',
+    imageSrc: 'images/buksuwon_i_139A_평면도.jpg',
+    subText: '압도적 스케일의 대형 팬트하우스형 스위트',
+    desc: '탁 트인 조망과 여유로운 대형 주거 공간을 제공하며, 최고급 커스텀 마감재와 파노라마 조망권을 구현한 최고급 평면입니다.',
+    supplyArea: '180.25㎡',
+    privateArea: '139.12㎡',
+    rooms: '침실 4개 + 알파룸 + 드레스룸 2개 + 욕실 3개',
+    featurePills: ['펜트하우스급 최고급 마감', '대형 가족 전용 멀티룸', '파노라마 마스터 스위트', '프리미엄 세대 전용 수납']
+  },
+  '141b': {
+    title: '141㎡ B 타입 (대형 특화)',
+    badgeText: '141B',
+    imageSrc: 'images/buksuwon_i_141B_평면도.jpg',
+    subText: '럭셔리 하이엔드 테라스/광폭 구조',
+    desc: '와이드 다이닝 테이크아웃 및 최상층 하이엔드 수납 특화로 주거의 가치를 완성한 최상위 시그니처 공간입니다.',
+    supplyArea: '183.60㎡',
+    privateArea: '141.45㎡',
+    rooms: '침실 4개 + 서재룸 + 욕실 3개',
+    featurePills: ['최상위 럭셔리 구조', '독립 테라스형 서재 공간', '대형 드레스룸 & 파우더룸', '호텔식 고급 마스터 욕실']
   }
 };
 
@@ -81,12 +108,17 @@ function initTypeTabs() {
 
       const data = typeData[typeKey];
       document.getElementById('type-title').innerText = data.title;
-      document.getElementById('type-badge').innerText = data.badgeText;
       document.getElementById('type-sub').innerText = data.subText;
       document.getElementById('type-desc').innerText = data.desc;
       document.getElementById('type-supply-area').innerText = data.supplyArea;
       document.getElementById('type-private-area').innerText = data.privateArea;
       document.getElementById('type-rooms').innerText = data.rooms;
+
+      const typeImg = document.getElementById('type-img');
+      if (typeImg && data.imageSrc) {
+        typeImg.src = data.imageSrc;
+        typeImg.alt = `${data.badgeText} 평면도`;
+      }
 
       const pillsContainer = document.getElementById('type-feature-pills');
       if (pillsContainer) {
@@ -96,6 +128,27 @@ function initTypeTabs() {
       }
     });
   });
+}
+
+function openImageModal() {
+  const typeImg = document.getElementById('type-img');
+  const typeTitle = document.getElementById('type-title');
+  const modal = document.getElementById('img-modal');
+  const modalSrc = document.getElementById('img-modal-src');
+  const modalTitle = document.getElementById('img-modal-title');
+
+  if (modal && modalSrc && typeImg) {
+    modalSrc.src = typeImg.src;
+    if (modalTitle && typeTitle) {
+      modalTitle.innerText = `${typeTitle.innerText} - 평면도 확대`;
+    }
+    modal.classList.add('active');
+  }
+}
+
+function closeImageModal() {
+  const modal = document.getElementById('img-modal');
+  if (modal) modal.classList.remove('active');
 }
 
 /* 2. 관심고객 등록 폼 및 이메일(y3974@naver.com) 전송 연동 */

@@ -1369,28 +1369,85 @@ button {
   }
 }
 
-/* 전체 박스 테두리 럭셔리 골드 라인 통일 */
-.feature-bar-card,
-.overview-info-card,
-.overview-highlight-box,
-.premium-card,
-.type-content-card,
-.form-wrapper,
-.location-card,
-.stat-item,
-.spec-box,
-.hero-counter-box {
-  border: 1.5px solid rgba(212, 175, 55, 0.45) !important;
-  box-shadow: 0 8px 25px rgba(197, 168, 128, 0.12) !important;
-  transition: all 0.3s ease !important;
+/* 평면도 이미지 뷰어 & 모달 팝업 스타일 */
+.type-img-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #ffffff;
+  padding: 16px;
+  border: 1.5px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.feature-bar-card:hover,
-.premium-card:hover,
-.form-wrapper:hover,
-.overview-info-card:hover,
-.type-content-card:hover,
-.location-card:hover {
-  border-color: var(--color-accent-gold) !important;
-  box-shadow: 0 12px 35px rgba(212, 175, 55, 0.3) !important;
+.type-img-wrapper:hover {
+  border-color: var(--color-accent-gold);
+  box-shadow: 0 12px 35px rgba(212, 175, 55, 0.35);
+  transform: translateY(-2px);
+}
+
+.type-plan-img {
+  width: 100%;
+  max-height: 380px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.type-img-zoom-hint {
+  position: absolute;
+  bottom: 12px; right: 12px;
+  background: rgba(18, 14, 12, 0.85);
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary-light);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+}
+
+/* 이미지 모달 팝업 */
+.img-modal-box {
+  background: #18120e;
+  border: 2px solid var(--color-primary);
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 900px;
+  width: 92%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+}
+
+.img-modal-close {
+  position: absolute;
+  top: 14px; right: 20px;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.img-modal-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 16px;
+}
+
+.img-modal-content {
+  width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 12px;
 }

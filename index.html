@@ -251,15 +251,19 @@
         <button class="type-tab-btn" data-type="84c">84㎡ C</button>
         <button class="type-tab-btn" data-type="116a">116㎡ A</button>
         <button class="type-tab-btn" data-type="116b">116㎡ B</button>
+        <button class="type-tab-btn" data-type="139a">139㎡ A</button>
+        <button class="type-tab-btn" data-type="141b">141㎡ B</button>
       </div>
 
       <!-- Active Type Content Card -->
       <div class="type-content-card">
-        <!-- Visual Box (Pure CSS representation) -->
+        <!-- Visual Floorplan Image Container -->
         <div class="type-visual-box">
-          <div id="type-badge" class="type-visual-badge">84A</div>
-          <div class="type-visual-sub">대방 디에트르 혁신 4Bay 구조</div>
-          <div id="type-feature-pills" class="type-features-list">
+          <div class="type-img-wrapper" onclick="openImageModal()">
+            <img id="type-img" src="images/buksuwon_i_84A_평면도.jpg" alt="84A 평면도" class="type-plan-img">
+            <div class="type-img-zoom-hint">🔍 클릭 시 큰 이미지로 확대</div>
+          </div>
+          <div id="type-feature-pills" class="type-features-list" style="margin-top: 16px;">
             <div class="type-feature-pill">✓ 광폭 와이드 거실 특화</div>
             <div class="type-feature-pill">✓ 4Bay 혁신 판상형 설계</div>
             <div class="type-feature-pill">✓ 넉넉한 대형 팬트리 수납</div>
@@ -468,13 +472,12 @@
     </div>
   </div>
 
-  <!-- General Info Modal Overlay -->
-  <div id="info-modal" class="modal-overlay">
-    <div class="modal-box">
-      <div class="modal-icon">✓</div>
-      <h3 id="modal-title" class="modal-title">안내</h3>
-      <p id="modal-desc" class="modal-desc">내용이 들어갑니다.</p>
-      <button class="modal-close-btn" onclick="closeModal()">확인</button>
+  <!-- Image View Modal Overlay -->
+  <div id="img-modal" class="modal-overlay" onclick="closeImageModal()">
+    <div class="img-modal-box" onclick="event.stopPropagation()">
+      <button type="button" class="img-modal-close" onclick="closeImageModal()">×</button>
+      <h3 id="img-modal-title" class="img-modal-title">평면도 확대 보기</h3>
+      <img id="img-modal-src" src="" alt="평면도 확대" class="img-modal-content">
     </div>
   </div>
 
