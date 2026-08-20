@@ -1372,8 +1372,10 @@ button {
   justify-content: center;
   align-items: center;
   padding: 16px;
-  max-width: 950px;
+  max-width: 1100px;
+  width: 100%;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .type-img-wrapper {
@@ -1387,11 +1389,23 @@ button {
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
   cursor: default;
   transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 .type-img-wrapper:hover {
   border-color: var(--color-accent-gold);
   box-shadow: 0 20px 50px rgba(252, 211, 77, 0.3);
+}
+
+.type-plan-img {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  display: block;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 /* 방문 일자/시간 2열 그리드 및 약관 모달 스타일 */
