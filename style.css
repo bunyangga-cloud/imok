@@ -599,7 +599,7 @@ button {
   color: var(--color-text-sub);
 }
 
-/* Premium 6 Features Section */
+/* Premium 6 Features Section & Sequential Highlight Animation */
 .premium-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -608,19 +608,54 @@ button {
 
 .premium-card {
   background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
+  border: 1.5px solid rgba(212, 175, 55, 0.45);
   border-radius: 20px;
   padding: 36px 28px;
   transition: all 0.35s ease;
   position: relative;
   display: flex;
   flex-direction: column;
+  animation: sequentialCardHighlight 12s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-card:nth-child(1) { animation-delay: 0s; }
+.premium-card:nth-child(2) { animation-delay: 2s; }
+.premium-card:nth-child(3) { animation-delay: 4s; }
+.premium-card:nth-child(4) { animation-delay: 6s; }
+.premium-card:nth-child(5) { animation-delay: 8s; }
+.premium-card:nth-child(6) { animation-delay: 10s; }
+
+@keyframes sequentialCardHighlight {
+  0% {
+    transform: translateY(0) scale(1);
+    border-color: rgba(212, 175, 55, 0.45);
+    box-shadow: 0 8px 25px rgba(197, 168, 128, 0.12);
+  }
+  3% {
+    transform: translateY(-10px) scale(1.05);
+    border-color: #fcd34d;
+    box-shadow: 0 15px 35px rgba(252, 211, 77, 0.5), 0 0 25px rgba(252, 211, 77, 0.4);
+    z-index: 10;
+  }
+  16.66% {
+    transform: translateY(-10px) scale(1.05);
+    border-color: #fcd34d;
+    box-shadow: 0 15px 35px rgba(252, 211, 77, 0.5), 0 0 25px rgba(252, 211, 77, 0.4);
+    z-index: 10;
+  }
+  20%, 100% {
+    transform: translateY(0) scale(1);
+    border-color: rgba(212, 175, 55, 0.45);
+    box-shadow: 0 8px 25px rgba(197, 168, 128, 0.12);
+    z-index: 1;
+  }
 }
 
 .premium-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--color-primary);
-  box-shadow: 0 15px 35px rgba(163, 132, 91, 0.2);
+  transform: translateY(-12px) scale(1.06) !important;
+  border-color: var(--color-accent-gold) !important;
+  box-shadow: 0 20px 40px rgba(252, 211, 77, 0.6) !important;
+  z-index: 20 !important;
 }
 
 .premium-number {
