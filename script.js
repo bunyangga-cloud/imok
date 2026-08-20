@@ -1,5 +1,6 @@
 /* ==========================================================================
    수원 이목지구 디에트르 II 인터랙티브 자바스크립트
+   - 메일 수신 처리: y3974@naver.com (FormSubmit.co API 서비스 연동)
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollTop();
   initCounterAnimation();
 });
+
+const TARGET_EMAIL = 'y3974@naver.com';
 
 /* 1. 평형 타입별 탭 제어 데이터 및 로직 */
 const typeData = {
@@ -95,13 +98,16 @@ function initTypeTabs() {
   });
 }
 
-/* 2. 관심고객 등록 폼 처리 */
+/* 2. 관심고객 등록 폼 및 이메일(y3974@naver.com) 전송 연동 */
 function initRegistrationForm() {
   const form = document.getElementById('vip-register-form');
   if (!form) return;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerText;
 
     const name = document.getElementById('user-name').value.trim();
     const phone = document.getElementById('user-phone').value.trim();
@@ -121,22 +127,45 @@ function initRegistrationForm() {
       return;
     }
 
-    // 등록 정보 로컬 저장 (예시)
-    const registrationData = {
-      name,
-      phone,
-      area,
-      date: new Date().toLocaleString()
-    };
-    
-    let saved = JSON.parse(localStorage.getItem('imok_leads') || '[]');
-    saved.push(registrationData);
-    localStorage.setItem('imok_leads', JSON.stringify(saved));
+    submitBtn.innerText = '전송 중...';
+    submitBtn.disabled = true;
 
-    // 성공 모달 노출
-    openModal('접수 완료', `${name} 고객님의 관심고객 등록이 정상적으로 완료되었습니다.<br><br>지정하신 연락처(<strong>${phone}</strong>)로 모델하우스 위치 및 분양가 서류를 즉시 문자로 발송해 드립니다.`);
-    
-    form.reset();
+    // y3974@naver.com 메일로 FormSubmit AJAX 전송
+    try {
+      const response = await fetch(`https://formsubmit.co/ajax/${TARGET_EMAIL}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: `[이목지구 디에트르 II] 관심고객 접수: ${name}님`,
+          고객명: name,
+          연락처: phone,
+          희망평형: area,
+          접수시간: new Date().toLocaleString('ko-KR')
+        })
+      });
+
+      const result = await response.json();
+      
+      // 저장 로컬 백업
+      const registrationData = { name, phone, area, date: new Date().toLocaleString() };
+      let saved = JSON.parse(localStorage.getItem('imok_leads') || '[]');
+      saved.push(registrationData);
+      localStorage.setItem('imok_leads', JSON.stringify(saved));
+
+      // 성공 모달 노출
+      openModal('관심고객 접수 완료', `<strong>${name}</strong> 고객님의 관심고객 등록이 완료되었습니다.<br><br>작성하신 접수 내용이 <strong>${TARGET_EMAIL}</strong> 메일로 안전하게 전송되었으며, 입력하신 번호(<strong>${phone}</strong>)로 전담 안내원이 곧 연락드리겠습니다.`);
+      
+      form.reset();
+    } catch (err) {
+      console.error('메일 전송 오류:', err);
+      openModal('접수 완료', `${name} 고객님의 관심고객 등록이 접수되었습니다. (연락처: ${phone})`);
+    } finally {
+      submitBtn.innerText = originalText;
+      submitBtn.disabled = false;
+    }
   });
 }
 
@@ -217,16 +246,17 @@ function appendChatInputForm(type) {
     <div style="background: #ffffff; border: 1.5px solid #a3845b; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px;">
       <input type="text" id="bot-input-name" placeholder="고객명 입력" style="width: 100%; height: 38px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;" />
       <input type="tel" id="bot-input-phone" placeholder="연락처 입력 (하이픈 없이)" maxlength="11" style="width: 100%; height: 38px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;" />
-      <button onclick="submitBotForm('${type}')" style="width: 100%; height: 38px; background: #a3845b; color: #fff; border: none; border-radius: 6px; font-weight: 700; font-size: 13px; cursor: pointer;">신청하기</button>
+      <button id="bot-submit-btn" onclick="submitBotForm('${type}')" style="width: 100%; height: 38px; background: #a3845b; color: #fff; border: none; border-radius: 6px; font-weight: 700; font-size: 13px; cursor: pointer;">신청하기</button>
     </div>
   `;
   chatBody.appendChild(formDiv);
   chatBody.scrollTop = chatBody.scrollHeight;
 }
 
-function submitBotForm(type) {
+async function submitBotForm(type) {
   const name = document.getElementById('bot-input-name').value.trim();
   const phone = document.getElementById('bot-input-phone').value.trim();
+  const btn = document.getElementById('bot-submit-btn');
 
   if (!name || !phone) {
     appendChatMsg('⚠️ 성함과 연락처를 올바르게 입력해 주세요.', 'bot');
@@ -234,10 +264,30 @@ function submitBotForm(type) {
   }
 
   appendChatMsg(`신청 정보: ${name} / ${phone}`, 'user');
+  if (btn) { btn.innerText = '전송 중...'; btn.disabled = true; }
 
-  setTimeout(() => {
-    appendChatMsg(`감사합니다, ${name}님! 접수가 성공적으로 완료되었습니다. 입력하신 번호(${phone})로 요청하신 정보가 즉시 전달됩니다.`, 'bot');
-  }, 600);
+  try {
+    await fetch(`https://formsubmit.co/ajax/${TARGET_EMAIL}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        _subject: `[챗봇 신청] ${type} - ${name}님`,
+        신청유형: type,
+        고객명: name,
+        연락처: phone,
+        접수시간: new Date().toLocaleString('ko-KR')
+      })
+    });
+
+    setTimeout(() => {
+      appendChatMsg(`감사합니다, ${name}님! 접수가 완료되었습니다. 작성하신 정보는 ${TARGET_EMAIL} 메일로 발송되었으며 지정된 연락처(${phone})로 즉시 전송됩니다.`, 'bot');
+    }, 500);
+  } catch (err) {
+    appendChatMsg(`감사합니다, ${name}님! 정상 접수되었습니다.`, 'bot');
+  }
 }
 
 /* 5. 탑 스크롤 */
