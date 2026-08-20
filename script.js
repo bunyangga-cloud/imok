@@ -413,10 +413,10 @@ function initCounterAnimation() {
   }
 
   if (counterEl) {
-    const baseCumulative = 2800; // 이번 달 시초 누적 기본 수치
+    const baseCumulative = 0; // 이번 달 1일부터의 순수 일할계산 누적
     let addedCount = 0;
     
-    // 1일부터 어제 날짜(day)까지 하루 6~10명씩 일할계산 누적 합산
+    // 1일부터 어제 날짜(day)까지 하루 6~10명씩 일할계산 누적 합산 (19일 기준 114~190명 사이)
     for (let d = 1; d <= day; d++) {
       addedCount += getDailyRandomOffset(d);
     }
