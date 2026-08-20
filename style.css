@@ -241,8 +241,48 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 50% 30%, #2a201a 0%, #120e0c 70%);
+  background-color: #120e0c;
+  background-image: 
+    radial-gradient(circle at 50% 35%, rgba(42, 32, 26, 0.9) 0%, rgba(18, 14, 12, 0.98) 70%),
+    linear-gradient(to right, rgba(197, 168, 128, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(197, 168, 128, 0.08) 1px, transparent 1px);
+  background-size: 100% 100%, 45px 45px, 45px 45px;
+  animation: gridMove 25s linear infinite;
   overflow: hidden;
+}
+
+@keyframes gridMove {
+  0% { background-position: 0 0, 0 0, 0 0; }
+  100% { background-position: 0 0, 45px 45px, 45px 45px; }
+}
+
+/* 대각선 반대쪽으로 스쳐 지나가는 시네마틱 광원(Light Beam Sweep) */
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -120%;
+  width: 70%;
+  height: 200%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(197, 168, 128, 0.02) 20%,
+    rgba(255, 235, 190, 0.20) 50%,
+    rgba(197, 168, 128, 0.02) 80%,
+    transparent 100%
+  );
+  transform: rotate(-30deg);
+  pointer-events: none;
+  z-index: 1;
+  animation: lightSweepBeam 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes lightSweepBeam {
+  0% { left: -120%; opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { left: 200%; opacity: 0; }
 }
 
 .hero-glow {
@@ -250,10 +290,16 @@ button {
   top: 20%;
   left: 50%;
   transform: translateX(-50%);
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(197, 168, 128, 0.12) 0%, rgba(0,0,0,0) 70%);
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, rgba(197, 168, 128, 0.18) 0%, rgba(0,0,0,0) 70%);
   pointer-events: none;
+  animation: pulseAmbientGlow 5s ease-in-out infinite;
+}
+
+@keyframes pulseAmbientGlow {
+  0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.8; }
+  50% { transform: translateX(-50%) scale(1.15); opacity: 1; }
 }
 
 .hero-content {
