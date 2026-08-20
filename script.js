@@ -290,12 +290,19 @@ async function submitBotForm(type) {
   }
 }
 
-/* 5. 탑 스크롤 */
-function initScrollTop() {
-  window.bulletproofScrollToTop = function() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+/* 5. 완벽 호환 탑(TOP) 상단 이동 스크롤 엔진 */
+function bulletproofScrollToTop(e) {
+  if (e) e.preventDefault();
+  window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  document.documentElement.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  setTimeout(() => {
+    if (window.scrollY > 0 || document.documentElement.scrollTop > 0) {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+  }, 50);
 }
+window.bulletproofScrollToTop = bulletproofScrollToTop;
 
 /* 6. 카운터 애니메이션 */
 function initCounterAnimation() {
