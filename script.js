@@ -290,21 +290,59 @@ async function submitBotForm(type) {
   }
 }
 
-/* 5. 완벽 호환 탑(TOP) 상단 이동 스크롤 엔진 */
+document.addEventListener('DOMContentLoaded', () => {
+  initTypeTabs();
+  initRegistrationForm();
+  initChatbot();
+  initScrollTop();
+  initCounterAnimation();
+  initFadeInAnchorNavigation();
+});
+
+/* 5. 순간 이동 및 페이드인 상단(TOP) 스크롤 */
 function bulletproofScrollToTop(e) {
   if (e) e.preventDefault();
-  window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  document.documentElement.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  setTimeout(() => {
-    if (window.scrollY > 0 || document.documentElement.scrollTop > 0) {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
-    }
-  }, 50);
+  window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+
+  const heroContent = document.querySelector('.hero-content') || document.getElementById('hero');
+  if (heroContent) {
+    heroContent.classList.remove('fade-in-trigger');
+    void heroContent.offsetWidth;
+    heroContent.classList.add('fade-in-trigger');
+  }
 }
 window.bulletproofScrollToTop = bulletproofScrollToTop;
 
-/* 6. 카운터 애니메이션 */
+/* 6. 앵커(#) 링크 이동 시 업다운 스크롤 제거 및 즉시 이동 + 페이드인 연출 */
+function initFadeInAnchorNavigation() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
+      if (!targetId || targetId === '#') return;
+      const targetEl = document.querySelector(targetId);
+      if (targetEl) {
+        e.preventDefault();
+        
+        const header = document.querySelector('.site-header');
+        const headerHeight = header ? header.offsetHeight : 0;
+        const targetTop = targetEl.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+        
+        // 롤링 업다운 스크롤 없이 즉시 이동
+        window.scrollTo({ top: targetTop, behavior: 'instant' });
+        
+        // 타겟 섹션 페이드인 짠! 애니메이션
+        const targetBox = targetEl.querySelector('.form-wrapper, .location-card, .type-content-card, .overview-grid') || targetEl;
+        targetBox.classList.remove('fade-in-trigger');
+        void targetBox.offsetWidth;
+        targetBox.classList.add('fade-in-trigger');
+      }
+    });
+  });
+}
+
+/* 7. 카운터 애니메이션 */
 function initCounterAnimation() {
   const counterEl = document.getElementById('hero-live-counter');
   if (!counterEl) return;
