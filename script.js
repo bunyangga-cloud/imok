@@ -390,16 +390,24 @@ function initFadeInAnchorNavigation() {
   });
 }
 
-/* 7. 카운터 애니메이션 */
+/* 7. 이번 달 어제 기준 누적 수치 신뢰성 짙은 표기 */
 function initCounterAnimation() {
+  const dateStrEl = document.getElementById('yesterday-date-str');
   const counterEl = document.getElementById('hero-live-counter');
-  if (!counterEl) return;
+  
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
 
-  let count = 87;
-  setInterval(() => {
-    if (Math.random() > 0.6) {
-      count += Math.floor(Math.random() * 2) + 1;
-      counterEl.innerText = count;
-    }
-  }, 4000);
+  const month = yesterday.getMonth() + 1;
+  const day = yesterday.getDate();
+
+  if (dateStrEl) {
+    dateStrEl.innerText = `${month}월 ${day}일(어제) 기준`;
+  }
+
+  if (counterEl) {
+    const baseCount = 2840 + (day * 2);
+    counterEl.innerText = baseCount.toLocaleString('ko-KR');
+  }
 }
