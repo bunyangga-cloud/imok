@@ -390,7 +390,13 @@ function initFadeInAnchorNavigation() {
   });
 }
 
-/* 7. 이번 달 어제 기준 누적 수치 신뢰성 짙은 표기 */
+/* 7. 이번 달 어제 기준 31일 일할계산 (하루 6~10명 누적) 수식 알고리즘 */
+function getDailyRandomOffset(dayIndex) {
+  // 1일~31일별 결정적(Deterministic) 하루 6~10명 지정 수식
+  const seed = (dayIndex * 13 + 7) % 5; // 0, 1, 2, 3, 4
+  return 6 + seed; // 하루 6명 ~ 10명 사이!
+}
+
 function initCounterAnimation() {
   const dateStrEl = document.getElementById('yesterday-date-str');
   const counterEl = document.getElementById('hero-live-counter');
@@ -400,14 +406,22 @@ function initCounterAnimation() {
   yesterday.setDate(today.getDate() - 1);
 
   const month = yesterday.getMonth() + 1;
-  const day = yesterday.getDate();
+  const day = yesterday.getDate(); // 어제 날짜 (1~31일)
 
   if (dateStrEl) {
     dateStrEl.innerText = `${month}월 ${day}일(어제) 기준`;
   }
 
   if (counterEl) {
-    const baseCount = 2840 + (day * 2);
-    counterEl.innerText = baseCount.toLocaleString('ko-KR');
+    const baseCumulative = 2800; // 이번 달 시초 누적 기본 수치
+    let addedCount = 0;
+    
+    // 1일부터 어제 날짜(day)까지 하루 6~10명씩 일할계산 누적 합산
+    for (let d = 1; d <= day; d++) {
+      addedCount += getDailyRandomOffset(d);
+    }
+    
+    const totalCount = baseCumulative + addedCount;
+    counterEl.innerText = totalCount.toLocaleString('ko-KR');
   }
 }
