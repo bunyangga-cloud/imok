@@ -107,37 +107,25 @@ function initTypeTabs() {
       btn.classList.add('active');
 
       const data = typeData[typeKey];
-      document.getElementById('type-title').innerText = data.title;
-      document.getElementById('type-sub').innerText = data.subText;
-      document.getElementById('type-desc').innerText = data.desc;
-      document.getElementById('type-supply-area').innerText = data.supplyArea;
-      document.getElementById('type-private-area').innerText = data.privateArea;
-      document.getElementById('type-rooms').innerText = data.rooms;
 
+      // 평면도 이미지 교체 (최우선 실행)
       const typeImg = document.getElementById('type-img');
       if (typeImg && data.imageSrc) {
         typeImg.src = data.imageSrc;
         typeImg.alt = `${data.badgeText} 평면도`;
       }
 
-      const pillsContainer = document.getElementById('type-feature-pills');
-      if (pillsContainer) {
-        pillsContainer.innerHTML = data.featurePills
-          .map(pill => `<div class="type-feature-pill">✓ ${pill}</div>`)
-          .join('');
-      }
+      // 존재 시 텍스트 보조 갱신 (Null 안심 처리)
+      const elTitle = document.getElementById('type-title');
+      if (elTitle) elTitle.innerText = data.title;
+
+      const elSub = document.getElementById('type-sub');
+      if (elSub) elSub.innerText = data.subText;
+
+      const elDesc = document.getElementById('type-desc');
+      if (elDesc) elDesc.innerText = data.desc;
     });
   });
-}
-
-    }
-    modal.classList.add('active');
-  }
-}
-
-function closeImageModal() {
-  const modal = document.getElementById('img-modal');
-  if (modal) modal.classList.remove('active');
 }
 
 /* 2. 모델하우스 방문예약 폼 및 이메일(y3974@naver.com) 전송 연동 */
